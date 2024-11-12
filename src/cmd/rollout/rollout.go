@@ -3,14 +3,14 @@ package rollout
 import (
 	"context"
 
-	"github.com/sofyan48/sushiroll/src/cmd/app"
+	"github.com/sofyan48/sushiroll/src/cmd/contract"
 	"github.com/spf13/cobra"
 )
 
 type cmdRollout struct {
 }
 
-func NewRolloutCommand() app.Command {
+func NewRolloutCommand() contract.Command {
 	return &cmdRollout{}
 }
 
