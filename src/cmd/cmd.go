@@ -3,6 +3,7 @@ package cmd
 import (
 	"context"
 	"log"
+	"os"
 
 	"github.com/joho/godotenv"
 	"github.com/spf13/cobra"
@@ -25,8 +26,10 @@ func Start() {
 	if err != nil {
 		log.Fatalln("Error: ", err)
 	}
-
-	argoLib := argo.NewArgoRolloutLibrary(requester.New())
+	url := os.Getenv("ARGO_ROLLOUT_URL")
+	user := os.Getenv("ARGO_ROLLOUT_USERNAME")
+	pass := os.Getenv("ARGO_ROLLOUT_PASSWORD")
+	argoLib := argo.NewArgoRolloutLibrary(requester.New(), url, user, pass, true)
 	cmd := []*cobra.Command{
 		auth.NewAuthCommand().Command(ctx),
 		rollout.NewRolloutCommand(argoLib).Command(ctx),

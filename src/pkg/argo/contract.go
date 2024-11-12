@@ -3,6 +3,7 @@ package argo
 import "github.com/sofyan48/sushiroll/src/presentations"
 
 type ArgoRolloutLibrary interface {
+	SetNamepace(namespace string) *argoRollout
 	GetList() (*presentations.RolloutList, error)
 	Detail(service string) (*presentations.RolloutDetail, error)
 	Promote(isFull bool, service string) (*presentations.PromoteArgoResponse, error)

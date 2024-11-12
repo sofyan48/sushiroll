@@ -18,15 +18,16 @@ type argoRollout struct {
 	Username  string
 	Password  string
 	Namespace string
+	IsAuth    bool
 }
 
-func NewArgoRolloutLibrary(request requester.Contract) ArgoRolloutLibrary {
+func NewArgoRolloutLibrary(request requester.Contract, url, user, pass string, is_auth bool) ArgoRolloutLibrary {
 	return &argoRollout{
-		request:   request,
-		Url:       os.Getenv("ARGO_ROLLOUT_URL"),
-		Username:  os.Getenv("ARGO_ROLLOUT_USERNAME"),
-		Password:  os.Getenv("ARGO_ROLLOUT_PASSWORD"),
-		Namespace: os.Getenv("ARGO_ROLLOUT_NAMESPACE"),
+		request:  request,
+		Url:      url,
+		Username: user,
+		Password: pass,
+		IsAuth:   is_auth,
 	}
 }
 
@@ -35,8 +36,17 @@ func (a *argoRollout) client(url, method string, body io.Reader) (*http.Request,
 	if err != nil {
 		return nil, err
 	}
-	reqs.SetBasicAuth(a.Username, a.Password)
+	if a.IsAuth {
+		reqs.SetBasicAuth(a.Username, a.Password)
+	}
 	return reqs, nil
+}
+func (a *argoRollout) SetNamepace(namespace string) *argoRollout {
+	if namespace == "" {
+		namespace = os.Getenv("ARGO_ROLLOUT_NAMESPACE")
+	}
+	a.Namespace = namespace
+	return a
 }
 
 func (a *argoRollout) GetList() (*presentations.RolloutList, error) {
