@@ -10,6 +10,8 @@ import (
 	"github.com/joho/godotenv"
 	"github.com/spf13/cobra"
 
+	"github.com/sofyan48/sushiroll/src/cmd/actions"
+	"github.com/sofyan48/sushiroll/src/cmd/auth"
 	"github.com/sofyan48/sushiroll/src/cmd/rollout"
 )
 
@@ -32,7 +34,9 @@ func Start() {
 	}
 
 	cmd := []*cobra.Command{
+		auth.NewAuthCommand().Command(ctx),
 		rollout.NewRolloutCommand().Command(ctx),
+		actions.NewActionRolloutCommand().Command(ctx),
 	}
 
 	rootCmd.AddCommand(cmd...)

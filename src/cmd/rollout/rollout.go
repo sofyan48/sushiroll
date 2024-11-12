@@ -19,9 +19,7 @@ func (i *cmdRollout) Command(ctx context.Context) *cobra.Command {
 		Use:   "rollout",
 		Short: "Rollout model",
 	}
-	// cmd.AddCommand(i.packagesImporter(ctx))
-	// cmd.AddCommand(i.memberImporter(ctx))
-	// cmd.AddCommand(i.instantPackagesImporter(ctx))
-	// cmd.AddCommand(i.gmvImporter(ctx))
+	cmd.AddCommand(i.list(ctx))
+	cmd.AddCommand(i.detail(ctx))
 	return cmd
 }
