@@ -14,7 +14,6 @@ type Rollout struct {
 	ObjectMeta  ObjectMeta   `json:"objectMeta"`
 	Status      string       `json:"status"`
 	Message     string       `json:"message"`
-	Icon        string       `json:"icon"`
 	Strategy    string       `json:"strategy"`
 	Ready       int          `json:"ready"`
 	Current     int          `json:"current"`

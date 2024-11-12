@@ -1,4 +1,4 @@
-package rollout
+package argo
 
 import (
 	"bytes"

@@ -4,14 +4,18 @@ import (
 	"context"
 
 	"github.com/sofyan48/sushiroll/src/cmd/contract"
+	"github.com/sofyan48/sushiroll/src/pkg/argo"
 	"github.com/spf13/cobra"
 )
 
 type cmdRollout struct {
+	roll argo.ArgoRolloutLibrary
 }
 
-func NewRolloutCommand() contract.Command {
-	return &cmdRollout{}
+func NewRolloutCommand(roll argo.ArgoRolloutLibrary) contract.Command {
+	return &cmdRollout{
+		roll: roll,
+	}
 }
 
 func (i *cmdRollout) Command(ctx context.Context) *cobra.Command {

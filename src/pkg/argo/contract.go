@@ -1,4 +1,4 @@
-package rollout
+package argo
 
 import "github.com/sofyan48/sushiroll/src/presentations"
 
