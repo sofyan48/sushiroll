@@ -9,7 +9,7 @@ import (
 func (i *cmdRolloutAction) promote(ctx context.Context) *cobra.Command {
 	command := &cobra.Command{
 		Use:   "promote",
-		Short: "Promte service",
+		Short: "Promote service",
 		Run: func(c *cobra.Command, args []string) {
 			// start, _ := c.Flags().GetString("start")
 			// end, _ := c.Flags().GetString("end")

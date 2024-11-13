@@ -2,7 +2,6 @@ package rollout
 
 import (
 	"context"
-	"fmt"
 	"log"
 	"strings"
 	"time"
@@ -22,7 +21,6 @@ type Detail struct {
 }
 
 func (i *cmdRollout) detail(ctx context.Context) *cobra.Command {
-	var allOption bool
 	command := &cobra.Command{
 		Use:   "detail",
 		Short: "Service detail",
@@ -51,42 +49,9 @@ func (i *cmdRollout) detail(ctx context.Context) *cobra.Command {
 				strings.Split(data.ReplicaSets[0].Images[0], ":")[1],
 			)
 			tbl.Print()
-			if allOption {
-				fmt.Println("\nShow All resource")
-				tblAll := table.New("No", "Name", "Pods", "Status", "Ready", "Created", "Version")
-				tblAll.WithHeaderFormatter(headerFmt).WithFirstColumnFormatter(columnFmt)
-				dataStructured := []Detail{}
-				for _, i := range data.ReplicaSets {
-					detailStructured := Detail{}
-					for _, p := range i.Pods {
-						detailStructured.Ready = p.Ready
-						detailStructured.Pod = p.ObjectMeta.Name
-						detailStructured.Status = p.Status
-						detailStructured.Created = &p.ObjectMeta.CreationTimestamp
-					}
-					for _, c := range i.Images {
-						detailStructured.Images = strings.Split(c, ":")[1]
-					}
-					detailStructured.Name = i.ObjectMeta.Name
-					dataStructured = append(dataStructured, detailStructured)
-				}
-				for k, v := range dataStructured {
-					k += 1
-					tblAll.AddRow(k,
-						v.Name,
-						v.Pod,
-						v.Status,
-						v.Ready,
-						v.Created,
-						v.Images,
-					)
-				}
-				tblAll.Print()
-			}
 		},
 	}
 	command.Flags().StringP("namespace", "n", "", "Your namespace")
 	command.Flags().StringP("service", "s", "", "Your service")
-	command.Flags().BoolVarP(&allOption, "all", "a", false, "Show all items")
 	return command
 }
